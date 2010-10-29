@@ -41,6 +41,18 @@ module SessionTest
         session.remember_me = true
         assert_equal 3.months, session.remember_me_for
       end
+
+      def test_secure_cookies
+        UserSession.secure_cookies = true
+        assert_equal true, UserSession.secure_cookies
+        session = UserSession.new
+        assert_equal true, session.secure_cookies?
+
+        UserSession.secure_cookies false
+        assert_equal false, UserSession.secure_cookies
+        session = UserSession.new
+        assert_equal false, session.secure_cookies?
+      end
     end
     
     class InstanceMethodsTest < ActiveSupport::TestCase
